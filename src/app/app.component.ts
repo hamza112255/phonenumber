@@ -21,7 +21,7 @@ export class AppComponent {
     this.myForm = this.fb.group({
       phoneNo: ['', [Validators.required, this.validatePhoneNumber.bind(this)]],
       countryName: ['', Validators.required],
-      countryCode: ['', [Validators.required]],
+      countryCode: ['', Validators.required],
     });
     this.shortCode = 'Country';
     console.log(this.shortCode);

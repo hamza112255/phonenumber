@@ -1,0 +1,63 @@
+<div class="example-container ml-20 mt-20">
+  <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+    <mat-label>Phone Number</mat-label>
+    <div class="example-form-fields">
+      <mat-form-field appearance="outline" class="w-40">
+        <mat-select
+          formControlName="countryName"
+          (selectionChange)="onSelectionChange($event)"
+        >
+          <mat-select-trigger>
+            {{ shortCode }}
+          </mat-select-trigger>
+          <mat-option *ngFor="let country of countries" [value]="country.name">
+            <div class="row">
+              <span
+                ><img src="{{ country.image }}" alt="flag" class="w-5 h-5"
+              /></span>
+              <span>{{ country.name }}</span>
+            </div>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-20">
+        <input
+          formControlName="countryCode"
+          matInput
+          placeholder="Code"
+          readonly
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <input
+          formControlName="phoneNo"
+          matInput
+          placeholder="Enter Phone No"
+          maxlength="20"
+        />
+      </mat-form-field>
+      <div
+        *ngIf="
+          myForm.get('phoneNo')?.hasError('required') &&
+          isEmpty &&
+          myForm.get('phoneNo')?.touched
+        "
+        class="error"
+      >
+        Phone number is required.
+      </div>
+      <div
+        *ngIf="
+          myForm.get('phoneNo')?.hasError('invalidPhoneNumber') &&
+          !isEmpty &&
+          myForm.get('phoneNo')?.touched
+        "
+        class="error"
+      >
+        Invalid phone number format. Please enter a numeric phone number (>7).
+      </div>
+    </div>
+    <button mat-raised-button color="primary" type="submit">Submit</button>
+    <p>{{ [countryCode, number] | concatenate }}</p>
+  </form>
+</div>

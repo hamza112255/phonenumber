@@ -8,6 +8,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatButtonModule } from '@angular/material/button';
+
 import { ConcatenatePipe } from './concatenate.pipe';
 @NgModule({
   declarations: [AppComponent, ConcatenatePipe],
@@ -20,6 +22,7 @@ import { ConcatenatePipe } from './concatenate.pipe';
     MatInputModule,
     ReactiveFormsModule,
     FlexLayoutModule,
+    MatButtonModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

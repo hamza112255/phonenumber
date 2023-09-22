@@ -5,7 +5,6 @@ import { CountryCode } from 'libphonenumber-js/types';
 import {
   parsePhoneNumberFromString,
   format,
-  isValidNumber,
 } from 'libphonenumber-js';
 
 @Component({

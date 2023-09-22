@@ -2,10 +2,27 @@
   <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
     <mat-label><h5>Phone Number</h5></mat-label>
     <div class="example-form-fields">
-      <mat-form-field appearance="outline" class="w-40">
+      <button class="dropdown" mat-button [matMenuTriggerFor]="menu">
+        <mat-icon style="font-size: 25px;">arrow_drop_down</mat-icon>
+      </button>
+
+      <mat-menu #menu="matMenu" class="h-96">
+        <ng-container *ngFor="let country of countries">
+          <button mat-menu-item (click)="onSelectionChange(country.name)">
+            <div class="row">
+              <span
+                ><img src="{{ country.image }}" alt="flag" class="w-5 h-5"
+              /></span>
+              <span>{{ country.name }}</span>
+            </div>
+          </button>
+        </ng-container>
+      </mat-menu>
+      <!-- <mat-form-field appearance="outline" class="w-40">
         <mat-select
           formControlName="countryName"
           (selectionChange)="onSelectionChange($event)"
+          placeholder="Select Country"
         >
           <mat-select-trigger>
             {{ shortCode }}
@@ -20,7 +37,7 @@
             </div>
           </mat-option>
         </mat-select>
-      </mat-form-field>
+      </mat-form-field> -->
       <mat-form-field appearance="outline" class="w-20">
         <input
           formControlName="countryCode"
@@ -33,7 +50,7 @@
         <input
           formControlName="phoneNo"
           matInput
-          placeholder="Enter Phone No"
+          placeholder="Phone No"
           maxlength="20"
         />
       </mat-form-field>
@@ -55,7 +72,7 @@
         "
         class="error"
       >
-        Invalid phone number format. Please enter a numeric phone number (>7).
+        Invalid phone number format.
       </div>
     </div>
     <button mat-raised-button type="submit" color="primary">Submit</button>

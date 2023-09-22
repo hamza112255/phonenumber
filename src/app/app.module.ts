@@ -11,6 +11,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material/button';
 import { MatBadgeModule } from '@angular/material/badge';
 import { ConcatenatePipe } from './concatenate.pipe';
+import { MatMenuModule } from '@angular/material/menu';
 @NgModule({
   declarations: [AppComponent, ConcatenatePipe],
   imports: [
@@ -24,6 +25,7 @@ import { ConcatenatePipe } from './concatenate.pipe';
     FlexLayoutModule,
     MatButtonModule,
     MatBadgeModule,
+    MatMenuModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

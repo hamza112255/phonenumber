@@ -1,8 +1,12 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators,AbstractControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { COUNTRIES } from './countries';
-import * as libphonenumber from 'libphonenumber-js';
-
+import { CountryCode } from 'libphonenumber-js/types';
+import {
+  parsePhoneNumberFromString,
+  format,
+  isValidNumber,
+} from 'libphonenumber-js';
 
 @Component({
   selector: 'app-root',
@@ -16,41 +20,73 @@ export class AppComponent {
   countryName: string | undefined;
   number: string = '';
   countryCode: string = '';
-  shortCode: string = '';
-  flag: string = '';
+  shortCode: CountryCode | any = '';
   isValidPhoneNumber: boolean = false;
   isEmpty: boolean = false;
+  format: any;
+  title: string = 'MENU';
   constructor(private fb: FormBuilder) {
     this.myForm = this.fb.group({
       phoneNo: ['', [Validators.required, this.validatePhoneNumber.bind(this)]],
-      countryName: ['', Validators.required],
       countryCode: ['', Validators.required],
     });
-    this.shortCode = 'Country';
-    console.log(this.shortCode);
+    // this.format = format('2133734253', 'US','INTERNATIONAL');
   }
+  // validatePhoneNumber(control: any) {
+  //   const phoneNumber = control.value;
+  //   this.format = format(phoneNumber, this.shortCode, 'INTERNATIONAL');
+  //   const parsedPhoneNumber=parsePhoneNumberFromString(this.format);
+  //   console.log(this.format);
+  //   console.log(parsePhoneNumberFromString(this.format))
+  //   console.log(parsedPhoneNumber?.isValid());
+
+  // }
   validatePhoneNumber(control: any) {
     const phoneNumber = control.value;
-    if (phoneNumber.length === 0) {
-      this.isEmpty = true;
-    } else {
-      this.isEmpty = false;
-    }
-    const phoneRegex = /^\d{7,17}$/;
-    if (phoneRegex.test(phoneNumber)) {
+    this.format = format(phoneNumber, this.shortCode, 'INTERNATIONAL');
+    const parsedPhoneNumber = parsePhoneNumberFromString(this.format);
+    console.log(parsedPhoneNumber?.isValid());
+    if (parsedPhoneNumber?.isValid()) {
       return null;
     } else {
       return { invalidPhoneNumber: true };
     }
+    // const phoneNumber = control.value;
+    // if (phoneNumber.length === 0) {
+    //   this.isEmpty = true;
+    // } else {
+    //   this.isEmpty = false;
+    // }
+    // const phoneRegex = /^\d{7,17}$/;
+    // if (phoneRegex.test(phoneNumber)) {
+    //   return null;
+    // } else {
+    //   return { invalidPhoneNumber: true };
+    // }
   }
-  onSelectionChange(event: any) {
-    this.countryName = event.value;
-    for (const country of this.countries) {
-      if (this.countryName === country.name) {
-        this.myForm.get('countryCode')?.setValue(country.phone);
-        this.shortCode = country.iso['alpha-2'];
-        this.flag = country.image;
-      }
+  // onSelectionChange(event: any) {
+  //   this.countryName = event.value;
+  //   for (const country of this.countries) {
+  //     if (this.countryName === country.name) {
+  //       this.myForm.get('countryCode')?.setValue(country.phone);
+  //       this.shortCode = country.iso['alpha-2'];
+  //     }
+  //   }
+  // }
+  onSelectionChange(nameCountry: any) {
+    this.countryName = nameCountry;
+    console.log(this.countryName);
+    const selectedCountry = this.countries.find(
+      (country) => country.name === this.countryName
+    );
+    if (selectedCountry) {
+      this.myForm.get('countryCode')?.setValue(selectedCountry.phone);
+      this.shortCode = selectedCountry.iso['alpha-2'];
+    } else {
+      console.error(
+        'Selected country not found in the countries list:',
+        this.countryName
+      );
     }
   }
   onSubmit() {
@@ -59,4 +95,7 @@ export class AppComponent {
       this.countryCode = this.myForm.get('countryCode')?.value;
     }
   }
+  onClosedMenu(event:any){
+    this.title = event;
+  };
 }

@@ -8,3 +8,10 @@
 button:hover{
   color: white;
 }
+.dropdown{
+  border: 1px black solid;
+  opacity: 0.5;
+  padding-top: 27px;
+  padding-bottom: 27px;
+  margin-bottom: 1px;
+}

@@ -72,7 +72,6 @@ export class AppComponent {
   // }
   onSelectionChange(nameCountry: any) {
     this.countryName = nameCountry;
-    console.log(this.countryName);
     const selectedCountry = this.countries.find(
       (country) => country.name === this.countryName
     );

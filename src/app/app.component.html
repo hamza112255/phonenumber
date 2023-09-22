@@ -10,6 +10,7 @@
           <mat-select-trigger>
             {{ shortCode }}
           </mat-select-trigger>
+          <mat-option value="" disabled>--Country--</mat-option>
           <mat-option *ngFor="let country of countries" [value]="country.name">
             <div class="row">
               <span

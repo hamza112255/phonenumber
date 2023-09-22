@@ -2,11 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { COUNTRIES } from './countries';
 import { CountryCode } from 'libphonenumber-js/types';
-import {
-  parsePhoneNumberFromString,
-  format,
-} from 'libphonenumber-js';
-
+import { parsePhoneNumberFromString, format } from 'libphonenumber-js';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

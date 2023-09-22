@@ -3,18 +3,16 @@
     <mat-label><h5>Phone Number</h5></mat-label>
     <div class="example-form-fields">
       <button class="dropdown" mat-button [matMenuTriggerFor]="menu">
-        <mat-icon style="font-size: 25px;">arrow_drop_down</mat-icon>
+        <mat-icon style="font-size: 25px">arrow_drop_down</mat-icon>
       </button>
 
-      <mat-menu #menu="matMenu" class="h-96">
+      <mat-menu #menu="matMenu" class="h-96 w-96">
         <ng-container *ngFor="let country of countries">
           <button mat-menu-item (click)="onSelectionChange(country.name)">
-            <div class="row">
-              <span
-                ><img src="{{ country.image }}" alt="flag" class="w-5 h-5"
-              /></span>
-              <span>{{ country.name }}</span>
-            </div>
+            <span
+              ><img src="{{ country.image }}" alt="flag" class="w-5 h-5"
+            /></span>
+            <span>{{ country.name }}</span>
           </button>
         </ng-container>
       </mat-menu>

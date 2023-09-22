@@ -30,7 +30,6 @@ export class AppComponent {
       phoneNo: ['', [Validators.required, this.validatePhoneNumber.bind(this)]],
       countryCode: ['', Validators.required],
     });
-    // this.format = format('2133734253', 'US','INTERNATIONAL');
   }
   // validatePhoneNumber(control: any) {
   //   const phoneNumber = control.value;
@@ -45,7 +44,6 @@ export class AppComponent {
     const phoneNumber = control.value;
     this.format = format(phoneNumber, this.shortCode, 'INTERNATIONAL');
     const parsedPhoneNumber = parsePhoneNumberFromString(this.format);
-    console.log(parsedPhoneNumber?.isValid());
     if (parsedPhoneNumber?.isValid()) {
       return null;
     } else {
@@ -95,7 +93,4 @@ export class AppComponent {
       this.countryCode = this.myForm.get('countryCode')?.value;
     }
   }
-  onClosedMenu(event:any){
-    this.title = event;
-  };
 }

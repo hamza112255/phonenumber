@@ -1,9 +1,7 @@
 .countryCode {
   width: 4rem;
 }
-.row {
-  display: flex;
-  flex-direction: row;
+.row{
 }
 button:hover{
   color: white;

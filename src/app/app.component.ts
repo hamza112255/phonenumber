@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { COUNTRIES } from './countries';
-import { CountryCode } from 'libphonenumber-js/types';
 import { parsePhoneNumberFromString, format } from 'libphonenumber-js';
 @Component({
   selector: 'app-root',
@@ -15,7 +14,7 @@ export class AppComponent {
   countryName: string | undefined;
   number: string = '';
   countryCode: string = '';
-  shortCode: CountryCode | any = '';
+  shortCode: any = '';
   isValidPhoneNumber: boolean = false;
   isEmpty: boolean = false;
   format: any;

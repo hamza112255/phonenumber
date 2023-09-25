@@ -66,7 +66,7 @@ export class AppComponent {
   //     }
   //   }
   // }
-  onSelectionChange(nameCountry: any) {
+  onMenuChange(nameCountry: any) {
     this.countryName = nameCountry;
     const selectedCountry = this.countries.find(
       (country) => country.name === this.countryName

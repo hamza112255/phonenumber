@@ -37,6 +37,11 @@ export class AppComponent {
   // }
   validatePhoneNumber(control: any) {
     const phoneNumber = control.value;
+    if (phoneNumber.length === 0) {
+      this.isEmpty = true;
+    } else {
+      this.isEmpty = false;
+    }
     this.format = format(phoneNumber, this.shortCode, 'INTERNATIONAL');
     const parsedPhoneNumber = parsePhoneNumberFromString(this.format);
     if (parsedPhoneNumber?.isValid()) {
@@ -74,7 +79,7 @@ export class AppComponent {
     if (selectedCountry) {
       this.myForm.get('countryCode')?.setValue(selectedCountry.phone);
       this.shortCode = selectedCountry.iso['alpha-2'];
-      this.title=selectedCountry.iso['alpha-2']
+      this.title = selectedCountry.iso['alpha-2'];
     } else {
       console.error(
         'Selected country not found in the countries list:',

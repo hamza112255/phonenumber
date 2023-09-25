@@ -6,7 +6,8 @@
         <mat-icon *ngIf="title.length === 0" style="font-size: 25px"
           >arrow_drop_down</mat-icon
         >
-        <span *ngIf="title.length !== 0">{{ title }}</span>
+        <span *ngIf="title.length !== 0"
+          >{{title}}</span>
       </button>
       <mat-menu #menu="matMenu" class="h-96">
         <ng-container *ngFor="let country of countries">

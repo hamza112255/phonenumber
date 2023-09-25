@@ -18,6 +18,7 @@ export class AppComponent {
   isEmpty: boolean = false;
   format: any;
   title: string = '';
+  flag: string ='';
   constructor(private fb: FormBuilder) {
     this.myForm = this.fb.group({
       phoneNo: ['', [Validators.required, this.validatePhoneNumber.bind(this)]],
@@ -78,6 +79,7 @@ export class AppComponent {
       this.myForm.get('countryCode')?.setValue(selectedCountry.phone);
       this.shortCode = selectedCountry.iso['alpha-2'];
       this.title = selectedCountry.iso['alpha-2'];
+      this.flag=selectedCountry.image;
     } else {
       console.error(
         'Selected country not found in the countries list:',

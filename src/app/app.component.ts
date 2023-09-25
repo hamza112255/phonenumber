@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { COUNTRIES } from './countries';
 import { CountryCode } from 'libphonenumber-js/types';
 import { parsePhoneNumberFromString, format } from 'libphonenumber-js';
+import { timeInterval } from 'rxjs';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -19,7 +20,7 @@ export class AppComponent {
   isValidPhoneNumber: boolean = false;
   isEmpty: boolean = false;
   format: any;
-  title: string = 'MENU';
+  title: string = '';
   constructor(private fb: FormBuilder) {
     this.myForm = this.fb.group({
       phoneNo: ['', [Validators.required, this.validatePhoneNumber.bind(this)]],
@@ -74,6 +75,7 @@ export class AppComponent {
     if (selectedCountry) {
       this.myForm.get('countryCode')?.setValue(selectedCountry.phone);
       this.shortCode = selectedCountry.iso['alpha-2'];
+      this.title=selectedCountry.iso['alpha-2']
     } else {
       console.error(
         'Selected country not found in the countries list:',

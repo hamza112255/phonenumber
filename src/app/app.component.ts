@@ -9,7 +9,6 @@ import { parsePhoneNumberFromString, format } from 'libphonenumber-js';
 })
 export class AppComponent {
   countries = COUNTRIES;
-  code: string = '+92';
   myForm: FormGroup;
   countryName: string | undefined;
   number: string = '';

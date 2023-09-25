@@ -5,8 +5,7 @@
       <button class="dropdown" mat-button [matMenuTriggerFor]="menu">
         <mat-icon style="font-size: 25px">arrow_drop_down</mat-icon>
       </button>
-
-      <mat-menu #menu="matMenu" class="h-96 w-96">
+      <mat-menu #menu="matMenu" class="h-96">
         <ng-container *ngFor="let country of countries">
           <button mat-menu-item (click)="onSelectionChange(country.name)">
             <span

@@ -12,8 +12,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatBadgeModule } from '@angular/material/badge';
 import { ConcatenatePipe } from './concatenate.pipe';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { CustomPhoneNumberComponent } from './custom-phone-number/custom-phone-number.component';
+
 @NgModule({
-  declarations: [AppComponent, ConcatenatePipe],
+  declarations: [AppComponent, ConcatenatePipe, CustomPhoneNumberComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -26,6 +29,7 @@ import { MatMenuModule } from '@angular/material/menu';
     MatButtonModule,
     MatBadgeModule,
     MatMenuModule,
+    MatAutocompleteModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

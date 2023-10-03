@@ -1,0 +1,38 @@
+<div class="example-container ml-20 mt-20">
+  <form [formGroup]="group">
+    <div class="example-form-fields">
+      <mat-menu #menu="matMenu" class="h-96">
+        <mat-form-field appearance="outline" class="example-full-width w-full">
+          <input placeholder="Select Country..." matInput (keyup)="onInputChange($event)"
+            (click)="$event.stopPropagation()">
+        </mat-form-field>
+        <ng-container *ngFor="let country of countries">
+          <button mat-menu-item (click)="onMenuChange(country.name)" class="btn">
+            <div class="flex items-center">
+              <span class="mr-2"><img src="{{ country.image }}" alt="flag" class="w-6 h-6" /></span>
+              <span>{{ country.name }}</span>
+            </div>
+          </button>
+        </ng-container>
+      </mat-menu>
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>Phone Number</mat-label>
+        <span matPrefix>
+          <button mat-button [matMenuTriggerFor]="menu">
+            <span *ngIf="isFlag" class="arrow">
+              <img src={{flag}} alt="flag" class="w-5 h-5"></span>
+            <span><mat-icon>arrow_drop_down</mat-icon></span>
+          </button></span>
+        <span matPrefix> {{ group.value.countryCode }}</span>
+        <input formControlName="phoneNo" matInput placeholder="XXX-XXX-XXXX" maxlength="20" />
+      </mat-form-field>
+      <div *ngIf="group.get('phoneNo')?.hasError('required') && isEmpty && group.get('phoneNo')?.touched" class="error">
+        Phone number is required.
+      </div>
+      <div *ngIf="group.get('phoneNo')?.hasError('invalidPhoneNumber') && !isEmpty && group.get('phoneNo')?.touched"
+        class="error">
+        Invalid phone number format.
+      </div>
+    </div>
+  </form>
+</div>

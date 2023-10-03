@@ -1,83 +1,18 @@
-<div class="example-container ml-20 mt-20">
-  <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
-    <mat-label><h5>Phone Number</h5></mat-label>
-    <div class="example-form-fields">
-      <button class="dropdown" mat-button [matMenuTriggerFor]="menu">
-        <mat-icon *ngIf="title.length === 0" style="font-size: 25px"
-          >arrow_drop_down</mat-icon
-        >
-        <span *ngIf="title.length !== 0">{{ title }}</span>
-      </button>
-      <mat-menu #menu="matMenu" class="h-96">
-        <ng-container *ngFor="let country of countries">
-          <button mat-menu-item (click)="onMenuChange(country.name)">
-            <div class="flex items-center">
-              <span>
-                <img src="{{ country.image }}" alt="flag" class="w-6 h-6" />
-              </span>
-              <span>{{ country.name }}</span>
-            </div>
-          </button>
-        </ng-container>
-      </mat-menu>
-      <!-- <mat-form-field appearance="outline" class="w-40">
-        <mat-select
-          formControlName="countryName"
-          (selectionChange)="onSelectionChange($event)"
-          placeholder="Select Country"
-        >
-          <mat-select-trigger>
-            {{ shortCode }}
-          </mat-select-trigger>
-          <mat-option value="" disabled>--Country--</mat-option>
-          <mat-option *ngFor="let country of countries" [value]="country.name">
-            <div class="row">
-              <span
-                ><img src="{{ country.image }}" alt="flag" class="w-5 h-5"
-              /></span>
-              <span>{{ country.name }}</span>
-            </div>
-          </mat-option>
-        </mat-select>
-      </mat-form-field> -->
-      <mat-form-field appearance="outline" class="w-20">
-        <input
-          formControlName="countryCode"
-          matInput
-          placeholder="Code"
-          readonly
-        />
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <input
-          formControlName="phoneNo"
-          matInput
-          placeholder="Phone No"
-          maxlength="20"
-        />
-      </mat-form-field>
-      <div
-        *ngIf="
-          myForm.get('phoneNo')?.hasError('required') &&
-          isEmpty &&
-          myForm.get('phoneNo')?.touched
-        "
-        class="error"
-      >
-        Phone number is required.
-      </div>
-      <div
-        *ngIf="
-          myForm.get('phoneNo')?.hasError('invalidPhoneNumber') &&
-          !isEmpty &&
-          myForm.get('phoneNo')?.touched
-        "
-        class="error"
-      >
-        Invalid phone number format.
-      </div>
-    </div>
-    <button mat-raised-button type="submit" color="primary">Submit</button>
-    <p>{{ [countryCode, number] | concatenate }}</p>
+<div class="container" *ngIf="!isEdit">
+  <h1>Custom Input Component</h1>
+  <form [formGroup]="myForm">
+    <app-custom-phone-number [group] = "getFormGroup()"></app-custom-phone-number>
   </form>
+  <button (click)="onSubmit()">Submit</button>
 </div>
+<div class="container" *ngIf="isEdit">
+  <h1>Custom Input Component</h1>
+  <form [formGroup]="myForm">
+    <app-custom-phone-number [group]="getFormGroup()"></app-custom-phone-number>
+  </form>
+  <button (click)="onEdit()">Edit</button>
+</div>
+<ul *ngFor="let student of students">
+  <li class="cursor-pointer" (click)="onEditing(student.id,student.phone)">{{ student.id }}{{ " " }}{{ student.phone }}
+  </li>
+</ul>

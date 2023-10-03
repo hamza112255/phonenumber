@@ -1,96 +1,70 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { COUNTRIES } from './countries';
-import { parsePhoneNumberFromString, format } from 'libphonenumber-js';
+import { Component, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
+import { FormGroup, FormBuilder, } from '@angular/forms';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
-  countries = COUNTRIES;
+export class AppComponent implements AfterViewChecked {
+
   myForm: FormGroup;
-  countryName: string | undefined;
-  number: string = '';
-  countryCode: string = '';
-  shortCode: any = '';
-  isValidPhoneNumber: boolean = false;
-  isEmpty: boolean = false;
-  format: any;
-  title: string = '';
-  flag: string ='';
-  constructor(private fb: FormBuilder) {
+  isEdit: boolean = false;
+  editedId: any;
+  id = 2;
+  students = [
+    {
+      id: 1,
+      phone: '+92|306 2342344',
+    },
+    {
+      id: 2,
+      phone: '+92|302 4322344',
+    },
+  ];
+
+  constructor(private fb: FormBuilder, private readonly changeDetectorRef: ChangeDetectorRef) {
     this.myForm = this.fb.group({
-      phoneNo: ['', [Validators.required, this.validatePhoneNumber.bind(this)]],
-      countryCode: ['', Validators.required],
+      phoneNumber: this.fb.group({ countryCode: [''], phoneNo: [''] },),
     });
   }
-  // validatePhoneNumber(control: any) {
-  //   const phoneNumber = control.value;
-  //   this.format = format(phoneNumber, this.shortCode, 'INTERNATIONAL');
-  //   const parsedPhoneNumber=parsePhoneNumberFromString(this.format);
-  //   console.log(this.format);
-  //   console.log(parsePhoneNumberFromString(this.format))
-  //   console.log(parsedPhoneNumber?.isValid());
 
-  // }
-  validatePhoneNumber(control: any) {
-    const phoneNumber = control.value;
-    if (phoneNumber.length === 0) {
-      this.isEmpty = true;
-    } else {
-      this.isEmpty = false;
-    }
-    this.format = format(phoneNumber, this.shortCode, 'INTERNATIONAL');
-    const parsedPhoneNumber = parsePhoneNumberFromString(this.format);
-    if (parsedPhoneNumber?.isValid()) {
-      return null;
-    } else {
-      return { invalidPhoneNumber: true };
-    }
-    // const phoneNumber = control.value;
-    // if (phoneNumber.length === 0) {
-    //   this.isEmpty = true;
-    // } else {
-    //   this.isEmpty = false;
-    // }
-    // const phoneRegex = /^\d{7,17}$/;
-    // if (phoneRegex.test(phoneNumber)) {
-    //   return null;
-    // } else {
-    //   return { invalidPhoneNumber: true };
-    // }
+  ngAfterViewChecked(): void {
+    this.changeDetectorRef.detectChanges();
   }
-  // onSelectionChange(event: any) {
-  //   this.countryName = event.value;
-  //   for (const country of this.countries) {
-  //     if (this.countryName === country.name) {
-  //       this.myForm.get('countryCode')?.setValue(country.phone);
-  //       this.shortCode = country.iso['alpha-2'];
-  //     }
-  //   }
-  // }
-  onMenuChange(nameCountry: any) {
-    this.countryName = nameCountry;
-    const selectedCountry = this.countries.find(
-      (country) => country.name === this.countryName
-    );
-    if (selectedCountry) {
-      this.myForm.get('countryCode')?.setValue(selectedCountry.phone);
-      this.shortCode = selectedCountry.iso['alpha-2'];
-      this.title = selectedCountry.iso['alpha-2'];
-      this.flag=selectedCountry.image;
-    } else {
-      console.error(
-        'Selected country not found in the countries list:',
-        this.countryName
-      );
-    }
+
+  getFormGroup(): FormGroup {
+    return this.myForm.get('phoneNumber') as FormGroup
   }
+
   onSubmit() {
-    if (this.myForm.valid) {
-      this.number = this.myForm.get('phoneNo')?.value;
-      this.countryCode = this.myForm.get('countryCode')?.value;
+    const submitFormGroup = this.myForm.get('phoneNumber');
+    if (submitFormGroup && submitFormGroup?.valid) {
+      this.id = this.id + 1;
+      const submit = submitFormGroup?.value;
+      const phoneNumber = submit.countryCode + '|' + submit.phoneNo;
+      this.students.push({ id: this.id, phone: phoneNumber });
     }
   }
+
+  onEditing(id: number, numb: string) {
+    const editFormGroup = this.myForm.get('phoneNumber');
+    let ph = numb.split('|');
+    this.isEdit = true;
+    this.editedId = id;
+    editFormGroup?.setValue({ countryCode: ph[0], phoneNo: ph[1], });
+  }
+
+  onEdit() {
+    const editFormGroup = this.myForm.get('phoneNumber');
+    if (editFormGroup && editFormGroup?.valid) {
+      const edit = editFormGroup.value;
+      const phoneNumber = edit.countryCode + '|' + edit.phoneNo;
+      const index = this.students.findIndex((obj) => obj.id === this.editedId);
+      if (index !== -1) {
+        this.students[index].phone = phoneNumber;
+      }
+    }
+  }
+
 }
